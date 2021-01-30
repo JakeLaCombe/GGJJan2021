@@ -37,12 +37,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (isGrounded && isjumping)
         {
-            Debug.Log("Jumping");
+
             //animator.SetBool("IsJumping", true);
             isGrounded = false;
             body.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             jumpSoundAudioSource.PlayOneShot(jumpSoundAudioClip, 0.5F);
-            Debug.Log(jumpForce);
+
         }
         if (!isGrounded && !isjumping && body.velocity.y > 0.01f)
         {
