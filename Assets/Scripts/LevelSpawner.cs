@@ -76,8 +76,9 @@ public class LevelSpawner : MonoBehaviour
                 }
 
             }
+            platforms.Add(platform);
         }
-        Debug.Log("made rooms");
+        // Debug.Log("made rooms");
 
         foreach (Chunk platform in platforms)
         {
@@ -118,7 +119,7 @@ public class LevelSpawner : MonoBehaviour
 
                     }
                 }
-                Debug.Log("Placed Room");
+                // Debug.Log("Placed Room");
                 break;
             }
 
