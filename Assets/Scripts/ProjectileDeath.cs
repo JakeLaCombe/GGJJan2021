@@ -21,7 +21,10 @@ public class ProjectileDeath : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
         life = .01f;
+
+
 
     }
 }
