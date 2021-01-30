@@ -17,14 +17,15 @@ public class LevelSpawner : MonoBehaviour
     public GameObject[] questObjectPossibilities;
     public GameObject questGiverSpeechBubble;
     public GameObject homeBase;  // The spot to return your found item from your quest
+    public MonoBehaviour gameManager;
     public AudioSource backgroundMusic;
     public AudioClip[] backgroundMusicPossibilities;
     private int backgroundMusicPossibilityCurrentlyPlayingIndex = -1;  // -1 = not playing
-    public MonoBehaviour gameManager;
-
 
     public int CountToSpawn;
     public List<GameObject> Spawners;
+
+    List<GameObject> spawnedobjects = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -54,7 +55,7 @@ public class LevelSpawner : MonoBehaviour
         behaviour.HomeBaseEntered += () =>
         {
             bool result = gameManager.TryReturnHeldQuestItem();
-            
+
             if (result)
             {
                 GameObject questObjectPrefab = questObjectPossibilities[Random.Range(0, questObjectPossibilities.Length)];
@@ -79,6 +80,11 @@ public class LevelSpawner : MonoBehaviour
 
     public void ChangeMap(GameObject questObjectPrefab)
     {
+        for (int i = 0; i < spawnedobjects.Count; i++)
+        {
+            Destroy(spawnedobjects[i].gameObject);
+        }
+        spawnedobjects.Clear();
         int[,] Tiles = new int[(int)GameSize.x + 1, (int)GameSize.y + 1];
 
         List<Chunk> platforms = new List<Chunk>();
@@ -186,8 +192,8 @@ public class LevelSpawner : MonoBehaviour
             // Offsets that Bryce told me to use
             return new Vector2(vec.x + 1F, vec.y + 1.5F);
         }, questObjectPrefab);
-
-        while (CountToSpawn > 0)
+        int lefttoSpawn = CountToSpawn;
+        while (lefttoSpawn > 0)
         {
             int sizeX = Random.Range(1, (int)GameSize.x - 1);
             int sizeY = Random.Range(1, (int)GameSize.y - 1);
@@ -201,8 +207,8 @@ public class LevelSpawner : MonoBehaviour
                     GameObject spawn = Instantiate(Spitter, new Vector3(sizeX + 1f + Direction.x * 0.75f, sizeY + .5f + Direction.y * 0.75f), transform.rotation);
                     spawn.GetComponent<SpitterLogic>().SpitDirection = Direction;
                     Tiles[sizeX, sizeY] = 2;
-                    CountToSpawn--;
-
+                    lefttoSpawn--;
+                    spawnedobjects.Add(spawn);
                 }
             }
             else
@@ -215,7 +221,8 @@ public class LevelSpawner : MonoBehaviour
                     Tiles[sizeX + 1, sizeY] = -1;
                     Tiles[sizeX, sizeY + 1] = -1;
                     Tiles[sizeX + 1, sizeY + 1] = -1;
-                    CountToSpawn--;
+                    lefttoSpawn--;
+                    spawnedobjects.Add(spawn);
                 }
 
 
@@ -223,7 +230,7 @@ public class LevelSpawner : MonoBehaviour
             }
         }
 
-        
+
 
         for (int x = 0; x < GameSize.x; x++)
         {

@@ -111,6 +111,14 @@ public class PlayerMovement : MonoBehaviour
         {
             body.gravityScale = 1.5f;
         }
+        if (Manager._heldQuestItem != null && Manager._heldQuestItem.Item == QuestItem.ItemType.CasioWatch)
+        {
+            Time.timeScale = 0.5f;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+        }
         Move();
         HandleCollisions();
 
