@@ -97,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Manager.QuestItem != null && Manager.QuestItem.Item == QuestItem.ItemType.FeatherBoa)
+        if (Manager._heldQuestItem != null && Manager._heldQuestItem.Item == QuestItem.ItemType.FeatherBoa)
         {
             body.gravityScale = .5f;
         }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private QuestItem _heldQuestItem;
+    public QuestItem _heldQuestItem;
 
     public void SetQuestItemPickedUp(QuestItem item)
     {
