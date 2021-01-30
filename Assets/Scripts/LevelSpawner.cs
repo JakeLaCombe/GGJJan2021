@@ -43,7 +43,7 @@ public class LevelSpawner : MonoBehaviour
 
     }
 
-    private static void SetUpHomeBaseToReturnItem(GameObject homeBase, GameManager gameManager)
+    private void SetUpHomeBaseToReturnItem(GameObject homeBase, GameManager gameManager)
     {
         //BoxCollider2D collider = homeBase.GetComponent<BoxCollider2D>();
 
@@ -51,7 +51,13 @@ public class LevelSpawner : MonoBehaviour
         behaviour.HomeBaseEntered += () =>
         {
             bool result = gameManager.TryReturnHeldQuestItem();
-            Debug.Log($"Successfully returned item:{result}");
+            
+            if (result)
+            {
+                GameObject questObjectPrefab = questObjectPossibilities[Random.Range(0, questObjectPossibilities.Length)];
+                ChangeMap(questObjectPrefab);
+                GiveQuest(this.questGiverSpeechBubble, questObjectPrefab);
+            }
         };
     }
 
@@ -242,6 +248,13 @@ public class LevelSpawner : MonoBehaviour
     private void GiveQuest(GameObject questGiverSpeechBubble, GameObject questObjectPrefab)
     {
         QuestItem itemScript = questObjectPrefab.GetComponent<QuestItem>();
+
+        // Clear out any previous objects inside the speech bubble
+        QuestItem previousItem = questGiverSpeechBubble.GetComponentInChildren<QuestItem>();
+        if (previousItem != null)
+        {
+            Object.Destroy(previousItem.gameObject);
+        }
 
         // Display the object inside the speech bubble
 

@@ -95,5 +95,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f52d8cd9f2d1034fa4652896feda310, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayableName: 
+  displayableName: Shutter Shades
   Item: 4
