@@ -10,6 +10,9 @@ public class LevelSpawner : MonoBehaviour
     private Tilemap tilemap;
     public TileBase Tile;
     public Vector2 platformSize;
+    public int PlatformGenerateCount;
+    public int PlacementTryMax;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,12 +32,12 @@ public class LevelSpawner : MonoBehaviour
         int[,] Tiles = new int[(int)GameSize.x + 1, (int)GameSize.y + 1];
 
         List<Chunk> platforms = new List<Chunk>();
-        for (int i = 0; i < 40; i++)
+        for (int i = 0; i < PlatformGenerateCount; i++)
         {
             Chunk platform = new Chunk
             {
-                X = Random.Range(2, (int)platformSize.x),
-                Y = Random.Range(2, (int)platformSize.y),
+                X = Random.Range(1, (int)platformSize.x),
+                Y = Random.Range(1, (int)platformSize.y),
             };
             platform.Tiles = new int[platform.X, platform.Y];
 
@@ -82,7 +85,7 @@ public class LevelSpawner : MonoBehaviour
 
         foreach (Chunk platform in platforms)
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < PlacementTryMax; i++)
             {
                 int sizeX = Random.Range(0, (int)GameSize.x - platform.X);
                 int sizeY = Random.Range(0, (int)GameSize.y - platform.Y);

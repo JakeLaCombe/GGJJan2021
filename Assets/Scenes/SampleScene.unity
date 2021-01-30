@@ -459,11 +459,11 @@ BoxCollider2D:
   m_GameObject: {fileID: 990772210}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 4109285efef590847a49beed40251d69, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0001732111, y: 0.06903005}
+  m_Offset: {x: -0.0001732111, y: -0.052327096}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -474,7 +474,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.803561, y: 1.23399}
+  m_Size: {x: 0.803561, y: 0.8994378}
   m_EdgeRadius: 0
 --- !u!50 &990772212
 Rigidbody2D:
@@ -492,7 +492,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1.5
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 4109285efef590847a49beed40251d69, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -581,6 +581,8 @@ MonoBehaviour:
   InputVelocity: {x: 0, y: 0}
   isGrounded: 0
   bottomTransform: {fileID: 1442299883}
+  jumpSoundAudioSource: {fileID: 0}
+  jumpSoundAudioClip: {fileID: 0}
 --- !u!1 &1058311572
 GameObject:
   m_ObjectHideFlags: 0
@@ -702,7 +704,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1365841551}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.9445019, y: 5.3650017, z: -10}
+  m_LocalPosition: {x: 3.9445019, y: 5.3650036, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1058311573}
@@ -813,19 +815,19 @@ CompositeCollider2D:
   - m_Collider: {fileID: 1545641730}
     m_ColliderPaths:
     - - X: 299999707
-        Y: -316349984
+        Y: -316349952
       - X: 299999707
-        Y: 356349984
+        Y: 802145024
       - X: -300000000
-        Y: 356349691
+        Y: 802144731
       - X: -299999707
-        Y: -316349984
+        Y: -316349952
   m_CompositePaths:
     m_Paths:
-    - - {x: 29.999943, y: -31.634998}
-      - {x: 29.999943, y: 35.635}
-      - {x: -30, y: 35.63494}
-      - {x: -29.999943, y: -31.634998}
+    - - {x: 29.999943, y: -31.634996}
+      - {x: 29.999943, y: 80.2145}
+      - {x: -30, y: 80.21445}
+      - {x: -29.999943, y: -31.634996}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
 --- !u!50 &1545641729
@@ -862,7 +864,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 1
-  m_Offset: {x: 0, y: 2}
+  m_Offset: {x: 0, y: 24.289753}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -873,7 +875,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 60, y: 67.27}
+  m_Size: {x: 60, y: 111.849495}
   m_EdgeRadius: 0
 --- !u!4 &1545641731
 Transform:
@@ -2343,4 +2345,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GameSize: {x: 50, y: 100}
   Tile: {fileID: 11400000, guid: 7f431d91f1a82e6429f2b4d34134bb07, type: 2}
-  platformSize: {x: 6, y: 4}
+  platformSize: {x: 8, y: 4}
+  PlatformGenerateCount: 500
+  PlacementTryMax: 10
