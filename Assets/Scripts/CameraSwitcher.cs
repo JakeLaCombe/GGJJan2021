@@ -10,7 +10,10 @@ public class CameraSwitcher : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        TopPriorty.Priority = 10;
-        LowPriorty.Priority = 9;
+        if (collision.gameObject.name == "Player")
+        {
+            TopPriorty.Priority = 10;
+            LowPriorty.Priority = 9;
+        }
     }
 }

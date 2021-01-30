@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip jumpSoundAudioClip;
     public float ConfusionTime;
     public GameManager Manager;
+    public Canvas Canvas;
     Rigidbody2D body;
     Animator animator;
     // Start is called before the first frame update
@@ -57,6 +58,17 @@ public class PlayerMovement : MonoBehaviour
         if (!isGrounded)
         {
             velocity *= airDrag;
+            if (Manager._heldQuestItem != null && Manager._heldQuestItem.Item == QuestItem.ItemType.Keytar)
+            {
+                if (isjumping)
+                {
+                    body.AddForce(new Vector2(0, (jumpForce / 2) * -1), ForceMode2D.Impulse);
+                }
+                else
+                {
+                    body.AddForce(new Vector2(0, jumpForce / 8), ForceMode2D.Impulse);
+                }
+            }
         }
         body.velocity = Vector2.SmoothDamp(body.velocity, new Vector2(velocity, body.velocity.y), ref InputVelocity, 0.02f);
 
@@ -112,6 +124,14 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             Time.timeScale = 1f;
+        }
+        if (Manager._heldQuestItem != null && Manager._heldQuestItem.Item == QuestItem.ItemType.ShutterShades)
+        {
+            Canvas.gameObject.SetActive(true);
+        }
+        else
+        {
+            Canvas.gameObject.SetActive(false);
         }
         Move();
         HandleCollisions();
