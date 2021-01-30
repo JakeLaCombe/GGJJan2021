@@ -20,7 +20,7 @@ public class ConfusionFog : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.gameObject.name);
+
         if (collision.gameObject.name == "Player")
         {
             collision.gameObject.GetComponent<PlayerMovement>().ConfusionTime = 5;
