@@ -1,0 +1,183 @@
+fileFormatVersion: 2
+guid: b57e197b820d4b94f99856aedcd97c04
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -527224846256271725
+    second: clothing_store0
+  - first:
+      213: 7725010247091372882
+    second: clothing_store_0
+  - first:
+      213: 15070288737555137
+    second: clothing_store_1
+  - first:
+      213: -105359079876461541
+    second: clothing_store_2
+  - first:
+      213: 4968370151028270568
+    second: clothing_store_3
+  - first:
+      213: 263864002047705833
+    second: clothing_store_4
+  - first:
+      213: 4153286919081778891
+    second: clothing_store_5
+  - first:
+      213: -1784082069052330901
+    second: clothing_store_6
+  - first:
+      213: -4323629887870415934
+    second: clothing_store_7
+  - first:
+      213: 592365390561599650
+    second: clothing_store_8
+  - first:
+      213: -8630525763633268310
+    second: clothing_store_9
+  - first:
+      213: -5518542139307851188
+    second: clothing_store_10
+  - first:
+      213: -2022558134988160243
+    second: clothing_store_11
+  - first:
+      213: -7866553955100960224
+    second: clothing_store_12
+  - first:
+      213: 6095795960181644964
+    second: clothing_store_13
+  - first:
+      213: -4679722814238381416
+    second: clothing_store_14
+  - first:
+      213: 255391928161169116
+    second: clothing_store_15
+  - first:
+      213: -4270815352293287113
+    second: clothing_store_16
+  - first:
+      213: -7311492975269316731
+    second: clothing_store_17
+  - first:
+      213: -5919114274441500583
+    second: clothing_store_18
+  - first:
+      213: -6247282996867276353
+    second: clothing_store_19
+  - first:
+      213: 6380900073477446180
+    second: clothing_store_20
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: clothing_store0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39e8222bbcbeea8f0800000000000000
+      internalID: -527224846256271725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
