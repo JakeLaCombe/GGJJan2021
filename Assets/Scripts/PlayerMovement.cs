@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public float airDrag;
     public float jumpForce;
     public Vector2 InputVelocity;
-    private bool isGrounded = false;
+    public bool isGrounded = false;
     public Transform bottomTransform;
     private float previousPositionY;
     Rigidbody2D body;
@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
     void Move()
     {
         float velocity = Input.GetAxis("Horizontal") * Speed;
-        bool isjumping = Input.GetButtonDown("Jump");
+        bool isjumping = Input.GetButton("Jump");
         if (!isGrounded)
         {
             velocity *= airDrag;
@@ -35,9 +35,11 @@ public class PlayerMovement : MonoBehaviour
 
         if (isGrounded && isjumping)
         {
+            Debug.Log("Jumping");
             //animator.SetBool("IsJumping", true);
             isGrounded = false;
-            body.AddForce(new Vector2(0, jumpForce));
+            body.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            Debug.Log(jumpForce);
         }
         if (!isGrounded && !isjumping && body.velocity.y > 0.01f)
         {
@@ -52,11 +54,12 @@ public class PlayerMovement : MonoBehaviour
         bool wasOnGround = isGrounded;
         isGrounded = false;
 
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(bottomTransform.position, 0.6f);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(bottomTransform.position, 0.06f);
         foreach (var collider in colliders)
         {
             if (collider.gameObject != gameObject)
             {
+                Debug.Log(collider.gameObject.name);
                 isGrounded = true;
 
             }
