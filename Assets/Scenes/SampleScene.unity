@@ -1393,7 +1393,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1933772272
 BoxCollider2D:
@@ -3165,6 +3165,11 @@ MonoBehaviour:
   questObjectPossibilities:
   - {fileID: 1704916483146537392, guid: 1f9f5b184f93eac4c810ab72bec667e5, type: 3}
   - {fileID: 9036366767524226981, guid: 8d60709409303064e916b7a876324c3a, type: 3}
+  - {fileID: 599543022686868280, guid: 8b22706770c1c78469d099dc145c6b00, type: 3}
+  - {fileID: 1957831018809301210, guid: 2d03f2cc797a67f498406eef6ef540d5, type: 3}
+  - {fileID: 4977646862316796395, guid: 1c17af43bc268e943908b33396736788, type: 3}
+  - {fileID: 8932952817166055577, guid: d4376a15cc0c7aa4eb84996fae351ac6, type: 3}
+  - {fileID: 2306728420258837038, guid: 26ed89050d43622439aadff0648621ab, type: 3}
   questGiverSpeechBubble: {fileID: 2073694995}
   homeBase: {fileID: 1933772270}
   gameManager: {fileID: 2010013608}

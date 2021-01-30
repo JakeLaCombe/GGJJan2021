@@ -29,12 +29,12 @@ public class LevelSpawner : MonoBehaviour
 
 
         tilemap = GetComponent<Tilemap>();
-        ChangeMap();
+
+        GameObject questObjectPrefab = questObjectPossibilities[Random.Range(0, questObjectPossibilities.Length)];
+
+        ChangeMap(questObjectPrefab);
         SetUpHomeBaseToReturnItem(homeBase, (GameManager)gameManager);
-
-        GameObject questObject = questObjectPossibilities[0];
-
-        GiveQuest(this.questGiverSpeechBubble, questObject);
+        GiveQuest(this.questGiverSpeechBubble, questObjectPrefab);
     }
 
     // Update is called once per frame
@@ -68,7 +68,7 @@ public class LevelSpawner : MonoBehaviour
         }
     }
 
-    public void ChangeMap()
+    public void ChangeMap(GameObject questObjectPrefab)
     {
         int[,] Tiles = new int[(int)GameSize.x + 1, (int)GameSize.y + 1];
 
@@ -176,7 +176,7 @@ public class LevelSpawner : MonoBehaviour
         {
             // Offsets that Bryce told me to use
             return new Vector2(vec.x + 1F, vec.y + 1.5F);
-        });
+        }, questObjectPrefab);
 
         while (CountToSpawn > 0)
         {
@@ -254,7 +254,7 @@ public class LevelSpawner : MonoBehaviour
         tm.text = $"Find my {itemScript.displayableName}";
     }
 
-    private void AddQuestItem(int[,] tiles, System.Func<Vector2Int, Vector2> tileToPositionTranslator)
+    private void AddQuestItem(int[,] tiles, System.Func<Vector2Int, Vector2> tileToPositionTranslator, GameObject questObjectPrefab)
     {
         // Find a good spot to put it
 
@@ -311,7 +311,7 @@ public class LevelSpawner : MonoBehaviour
         Vector2 foundWorldPosition = tileToPositionTranslator(foundTilePosition);
 
         // Add it to the scene
-        GameObject quest = Object.Instantiate(this.questObjectPossibilities[0]);
+        GameObject quest = Object.Instantiate(questObjectPrefab);
         quest.transform.position = new Vector3(foundWorldPosition.x, foundWorldPosition.y);
 
         CircleCollider2D collider = quest.AddComponent<CircleCollider2D>();
@@ -325,7 +325,7 @@ public class LevelSpawner : MonoBehaviour
             QuestItem questItemScript = quest.GetComponentInChildren<QuestItem>();
 
             ((GameManager)this.gameManager).SetQuestItemPickedUp(questItemScript);
-            Object.Destroy(quest);
+            quest.SetActive(false);  // Make it disappear but do not "destroy" it so we can refer to it later (because it's being "held" by the player)
         };
     }
 
