@@ -247,11 +247,11 @@ public class LevelSpawner : MonoBehaviour
 
         GameObject spriteToDisplayInSpeechBubble = Object.Instantiate(questObjectPrefab);
         spriteToDisplayInSpeechBubble.transform.parent = questGiverSpeechBubble.transform;
-        //spriteToDisplayInSpeechBubble.transform.localPosition = new Vector3(0, -0.5F, 0);
+        spriteToDisplayInSpeechBubble.transform.localPosition = new Vector3(0, -0.3F, -1 /* so it shows up on top */);
 
         // Change the text of the quest
         var tm = questGiverSpeechBubble.GetComponentInChildren<TMPro.TextMeshProUGUI>();
-        tm.text = $"Find my {itemScript.displayableName}";
+        tm.text = $"Find my {itemScript.displayableName}!";
     }
 
     private void AddQuestItem(int[,] tiles, System.Func<Vector2Int, Vector2> tileToPositionTranslator, GameObject questObjectPrefab)
