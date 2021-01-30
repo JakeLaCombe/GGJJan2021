@@ -57,9 +57,9 @@ public class PlayerMovement : MonoBehaviour
         Collider2D[] colliders = Physics2D.OverlapCircleAll(bottomTransform.position, 0.06f);
         foreach (var collider in colliders)
         {
-            if (collider.gameObject != gameObject)
+            if (collider.gameObject != gameObject && collider.gameObject.tag == "Ground")
             {
-                Debug.Log(collider.gameObject.name);
+
                 isGrounded = true;
 
             }
