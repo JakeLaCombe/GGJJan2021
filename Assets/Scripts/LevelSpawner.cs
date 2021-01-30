@@ -21,7 +21,7 @@ public class LevelSpawner : MonoBehaviour
 
 
     public int CountToSpawn;
-    public GameObject Spawner;
+    public List<GameObject> Spawners;
 
     // Start is called before the first frame update
     void Start()
@@ -183,17 +183,36 @@ public class LevelSpawner : MonoBehaviour
             int sizeX = Random.Range(1, (int)GameSize.x - 1);
             int sizeY = Random.Range(1, (int)GameSize.y - 1);
 
-            if (Tiles[sizeX, sizeY] == 1 && FindOnlyOneCardinalNeighbor(Tiles, sizeX, sizeY, out Vector2 Direction))
+            if (Random.value >= .35f)
             {
-                Direction *= -1;
-                GameObject spawn = Instantiate(Spawner, new Vector3(sizeX + 1f + Direction.x * 0.75f, sizeY + .5f + Direction.y * 0.75f), transform.rotation);
-                spawn.GetComponent<SpitterLogic>().SpitDirection = Direction;
-                Tiles[sizeX, sizeY] = 2;
-                CountToSpawn--;
+                GameObject Spitter = Spawners.Find(x => x.name == "Spitter");
+                if ((Tiles[sizeX, sizeY] == 1 || Tiles[sizeX, sizeY] == 0) && FindOnlyOneCardinalNeighbor(Tiles, sizeX, sizeY, out Vector2 Direction))
+                {
+                    Direction *= -1;
+                    GameObject spawn = Instantiate(Spitter, new Vector3(sizeX + 1f + Direction.x * 0.75f, sizeY + .5f + Direction.y * 0.75f), transform.rotation);
+                    spawn.GetComponent<SpitterLogic>().SpitDirection = Direction;
+                    Tiles[sizeX, sizeY] = 2;
+                    CountToSpawn--;
+
+                }
+            }
+            else
+            {
+                GameObject Confusion = Spawners.Find(x => x.name == "Confusion");
+                if (Tiles[sizeX, sizeY] == 0 && Tiles[sizeX + 1, sizeY] == 0 && Tiles[sizeX, sizeY + 1] == 0 && Tiles[sizeX + 1, sizeY + 1] == 0)
+                {
+                    GameObject spawn = Instantiate(Confusion, new Vector3(sizeX + 1.5f, sizeY + 1f), transform.rotation);
+                    Tiles[sizeX, sizeY] = -1;
+                    Tiles[sizeX + 1, sizeY] = -1;
+                    Tiles[sizeX, sizeY + 1] = -1;
+                    Tiles[sizeX + 1, sizeY + 1] = -1;
+                    CountToSpawn--;
+                }
+
+
 
             }
         }
-
 
         
 

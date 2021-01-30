@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform bottomTransform;
     public AudioSource jumpSoundAudioSource;
     public AudioClip jumpSoundAudioClip;
-    private float previousPositionY;
+    public float ConfusionTime;
     Rigidbody2D body;
     Animator animator;
     // Start is called before the first frame update
@@ -27,6 +27,15 @@ public class PlayerMovement : MonoBehaviour
     void Move()
     {
         float velocity = Input.GetAxis("Horizontal") * Speed;
+        //flips the dircetion the player moves if they are confused. 
+        if (ConfusionTime >= 0)
+        {
+            velocity *= -1;
+            ConfusionTime -= Time.deltaTime;
+        }
+
+
+
         if (velocity < 0)
         {
             transform.localScale = new Vector3(-1, 1, 1);
@@ -42,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("Moving", false);
 
         }
+
         bool isjumping = Input.GetButton("Jump");
         if (!isGrounded)
         {
@@ -89,7 +99,7 @@ public class PlayerMovement : MonoBehaviour
 
         Move();
         HandleCollisions();
-        previousPositionY = transform.position.y;
+       
 
 
     }
