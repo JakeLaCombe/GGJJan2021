@@ -36,8 +36,6 @@ public class LevelSpawner : MonoBehaviour
     }
     public void ChangeMap()
     {
-        AddQuestItem();
-
         int[,] Tiles = new int[(int)GameSize.x + 1, (int)GameSize.y + 1];
 
         List<Chunk> platforms = new List<Chunk>();
@@ -140,6 +138,12 @@ public class LevelSpawner : MonoBehaviour
 
         //Spawn some stuff;
 
+        AddQuestItem(Tiles, (vec) =>
+        {
+            // Offsets that Bryce told me to use
+            return new Vector2(vec.x + 1F, vec.y + 1.5F);
+        });
+
         while (CountToSpawn > 0)
         {
             int sizeX = Random.Range(1, (int)GameSize.x - 1);
@@ -156,7 +160,7 @@ public class LevelSpawner : MonoBehaviour
         }
 
 
-
+        
 
         for (int x = 0; x < GameSize.x; x++)
         {
@@ -177,10 +181,65 @@ public class LevelSpawner : MonoBehaviour
 
     }
 
-    private void AddQuestItem()
+    private void AddQuestItem(int[,] tiles, System.Func<Vector2Int, Vector2> tileToPositionTranslator)
     {
+        // Find a good spot to put it
+
+        System.Func<Vector2Int, bool> isTileFilled = (spot) =>
+        {
+            return tiles[spot.x, spot.y] != 0;
+        };
+
+        System.Func<Vector2Int, bool> isGoodSpot = (candidateMiddleFloor) =>
+        {
+            if (candidateMiddleFloor.y < 0 /* below the bottom */ ||
+                candidateMiddleFloor.y + 1 > tiles.GetLength(1) /* above the top */ ||
+                candidateMiddleFloor.x - 1 < 0 /* left of the leftmost range */ ||
+                candidateMiddleFloor.x + 1 > tiles.GetLength(0) /* right of rightmost */)
+            {
+                return false;  // Out of bounds of the tilemap
+            }
+
+            // Algorithm: find at least 3 blocks in a row with empty space above it and put the item there
+            //
+            //  *
+            // ###
+
+            return
+            isTileFilled(candidateMiddleFloor + Vector2Int.left) &&
+            isTileFilled(candidateMiddleFloor) &&
+            isTileFilled(candidateMiddleFloor + Vector2Int.right) &&
+            !(isTileFilled(candidateMiddleFloor + Vector2Int.left + Vector2Int.up)) &&
+            !(isTileFilled(candidateMiddleFloor + Vector2Int.up)) &&
+            !(isTileFilled(candidateMiddleFloor + Vector2Int.right + Vector2Int.up));
+        };
+
+        System.Func<Vector2Int> positionPicker = () =>
+        {
+            // Look at minimum 5 tiles above the ground, so start there
+            int minimumTilesAboveGround = 5;
+
+            for (int y = minimumTilesAboveGround; y < tiles.GetLength(1); ++y)
+            {
+                for (int x = 1; x < tiles.GetLength(0); ++x)
+                {
+                    if (isGoodSpot(new Vector2Int(x, y)))
+                    {
+                        return new Vector2Int(x, y);
+                    }
+                }
+            }
+
+            return new Vector2Int(0, 0);  // Oh no!
+        };
+
+        Vector2Int foundTilePosition = positionPicker();
+
+        Vector2 foundWorldPosition = tileToPositionTranslator(foundTilePosition);
+
+        // Add it to the scene
         GameObject quest = Object.Instantiate(this.questObject);
-        quest.transform.position = new Vector3(5F, 1F);
+        quest.transform.position = new Vector3(foundWorldPosition.x, foundWorldPosition.y);
 
         CircleCollider2D collider = quest.AddComponent<CircleCollider2D>();
         collider.radius = 1F;
