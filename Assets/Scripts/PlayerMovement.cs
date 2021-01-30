@@ -14,19 +14,34 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip jumpSoundAudioClip;
     private float previousPositionY;
     Rigidbody2D body;
-    //Animator animator;
+    Animator animator;
     // Start is called before the first frame update
     void Start()
     {
 
         body = GetComponent<Rigidbody2D>();
-        //animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Move()
     {
         float velocity = Input.GetAxis("Horizontal") * Speed;
+        if (velocity < 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+            animator.SetBool("Moving", true);
+        }
+        else if (velocity > 0)
+        {
+            transform.localScale = Vector3.one;
+            animator.SetBool("Moving", true);
+        }
+        else
+        {
+            animator.SetBool("Moving", false);
+
+        }
         bool isjumping = Input.GetButton("Jump");
         if (!isGrounded)
         {
@@ -38,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded && isjumping)
         {
 
-            //animator.SetBool("IsJumping", true);
+            animator.SetBool("Jumping", true);
             isGrounded = false;
             body.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             jumpSoundAudioSource.PlayOneShot(jumpSoundAudioClip, 0.5F);
@@ -64,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
             {
 
                 isGrounded = true;
-
+                animator.SetBool("Jumping", false);
             }
         }
     }

@@ -9,6 +9,7 @@ public class LevelSpawner : MonoBehaviour
     public Vector2 GameSize;
     private Tilemap tilemap;
     public TileBase Tile;
+    public TileBase Vending;
     public Vector2 platformSize;
     public int PlatformGenerateCount;
     public int PlacementTryMax = 10;
@@ -152,8 +153,9 @@ public class LevelSpawner : MonoBehaviour
             if (Tiles[sizeX, sizeY] == 1 && FindOnlyOneCardinalNeighbor(Tiles, sizeX, sizeY, out Vector2 Direction))
             {
                 Direction *= -1;
-                GameObject spawn = Instantiate(Spawner, new Vector3(sizeX, sizeY), transform.rotation);
+                GameObject spawn = Instantiate(Spawner, new Vector3(sizeX + 1f + Direction.x * 0.75f, sizeY + .5f + Direction.y * 0.75f), transform.rotation);
                 spawn.GetComponent<SpitterLogic>().SpitDirection = Direction;
+                Tiles[sizeX, sizeY] = 2;
                 CountToSpawn--;
 
             }
@@ -169,6 +171,10 @@ public class LevelSpawner : MonoBehaviour
                 if (Tiles[x, y] == 1)
                 {
                     tilemap.SetTile(new Vector3Int(x - 1, y - 1, 0), Tile);
+                }
+                else if (Tiles[x, y] == 2)
+                {
+                    tilemap.SetTile(new Vector3Int(x - 1, y - 1, 0), Vending);
                 }
                 else
                 {
@@ -298,7 +304,7 @@ public class LevelSpawner : MonoBehaviour
     private bool FindOnlyOneCardinalNeighbor(int[,] tiles, int x, int y, out Vector2 direction)
     {
         int count = 0;
-
+        direction = Vector2.zero;
         if (tiles[x - 1, y] == 1)
         {
             count++;
@@ -319,7 +325,7 @@ public class LevelSpawner : MonoBehaviour
             count++;
             direction = new Vector2(0, 1);
         }
-        else direction = Vector2.zero;
+
         if (count == 1)
         {
             return true;
