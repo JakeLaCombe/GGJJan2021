@@ -12,6 +12,8 @@ public class LevelSpawner : MonoBehaviour
     public Vector2 platformSize;
     public int PlatformGenerateCount;
     public int PlacementTryMax;
+    public GameObject questObject;
+    public MonoBehaviour gameManager;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +31,8 @@ public class LevelSpawner : MonoBehaviour
     }
     public void ChangeMap()
     {
+        AddQuestItem();
+
         int[,] Tiles = new int[(int)GameSize.x + 1, (int)GameSize.y + 1];
 
         List<Chunk> platforms = new List<Chunk>();
@@ -152,6 +156,40 @@ public class LevelSpawner : MonoBehaviour
 
     }
 
+    private void AddQuestItem()
+    {
+        GameObject quest = Object.Instantiate(this.questObject);
+        quest.transform.position = new Vector3(5F, 1F);
+
+        CircleCollider2D collider = quest.AddComponent<CircleCollider2D>();
+        collider.radius = 1F;
+        collider.transform.position = quest.transform.position;
+        collider.isTrigger = true;
+
+        QuestPickupBehaviour behaviour = quest.AddComponent<QuestPickupBehaviour>();
+        behaviour.ItemPickedUp += () => 
+        {
+            ((GameManager)this.gameManager).SetQuestItemPickedUp();
+            Object.Destroy(quest);
+        };
+    }
+
+    private class QuestPickupBehaviour : MonoBehaviour
+    {
+        public event System.Action ItemPickedUp;
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            Debug.Log("OnTriggerEnter2D MGN");
+            
+            if (this.ItemPickedUp != null)
+            {
+                this.ItemPickedUp();
+            }
+        }
+    }
+
+    // How many spaces around it are empty
     private int checkNeighbors(int[,] tiles, int x, int y)
     {
         int count = 0;
