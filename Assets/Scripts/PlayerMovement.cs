@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 InputVelocity;
     public bool isGrounded = false;
     public Transform bottomTransform;
+    public AudioSource jumpSoundAudioSource;
+    public AudioClip jumpSoundAudioClip;
     private float previousPositionY;
     Rigidbody2D body;
     //Animator animator;
@@ -39,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
             //animator.SetBool("IsJumping", true);
             isGrounded = false;
             body.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            jumpSoundAudioSource.PlayOneShot(jumpSoundAudioClip, 0.5F);
             Debug.Log(jumpForce);
         }
         if (!isGrounded && !isjumping && body.velocity.y > 0.01f)
