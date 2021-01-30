@@ -11,9 +11,14 @@ public class LevelSpawner : MonoBehaviour
     public TileBase Tile;
     public Vector2 platformSize;
     public int PlatformGenerateCount;
-    public int PlacementTryMax;
+    public int PlacementTryMax = 10;
+
     public GameObject questObject;
     public MonoBehaviour gameManager;
+
+
+    public int CountToSpawn;
+    public GameObject Spawner;
 
     // Start is called before the first frame update
     void Start()
@@ -53,6 +58,7 @@ public class LevelSpawner : MonoBehaviour
                 {
                     if (Random.value * 100 > 37)
                     {
+
                         platform.Tiles[x, y] = 1;
                     }
                     else
@@ -132,7 +138,22 @@ public class LevelSpawner : MonoBehaviour
 
         }
 
+        //Spawn some stuff;
 
+        while (CountToSpawn > 0)
+        {
+            int sizeX = Random.Range(1, (int)GameSize.x - 1);
+            int sizeY = Random.Range(1, (int)GameSize.y - 1);
+
+            if (Tiles[sizeX, sizeY] == 1 && FindOnlyOneCardinalNeighbor(Tiles, sizeX, sizeY, out Vector2 Direction))
+            {
+                Direction *= -1;
+                GameObject spawn = Instantiate(Spawner, new Vector3(sizeX, sizeY), transform.rotation);
+                spawn.GetComponent<SpitterLogic>().SpitDirection = Direction;
+                CountToSpawn--;
+
+            }
+        }
 
 
 
@@ -167,7 +188,7 @@ public class LevelSpawner : MonoBehaviour
         collider.isTrigger = true;
 
         QuestPickupBehaviour behaviour = quest.AddComponent<QuestPickupBehaviour>();
-        behaviour.ItemPickedUp += () => 
+        behaviour.ItemPickedUp += () =>
         {
             ((GameManager)this.gameManager).SetQuestItemPickedUp();
             Object.Destroy(quest);
@@ -181,7 +202,7 @@ public class LevelSpawner : MonoBehaviour
         private void OnTriggerEnter2D(Collider2D collision)
         {
             Debug.Log("OnTriggerEnter2D MGN");
-            
+
             if (this.ItemPickedUp != null)
             {
                 this.ItemPickedUp();
@@ -214,6 +235,41 @@ public class LevelSpawner : MonoBehaviour
             }
         }
         return count;
+    }
+    private bool FindOnlyOneCardinalNeighbor(int[,] tiles, int x, int y, out Vector2 direction)
+    {
+        int count = 0;
+
+        if (tiles[x - 1, y] == 1)
+        {
+            count++;
+            direction = new Vector2(-1, 0);
+        }
+        if (tiles[x + 1, y] == 1)
+        {
+            count++;
+            direction = new Vector2(1, 0);
+        }
+        if (tiles[x, y - 1] == 1)
+        {
+            count++;
+            direction = new Vector2(0, -1);
+        }
+        if (tiles[x, y + 1] == 1)
+        {
+            count++;
+            direction = new Vector2(0, 1);
+        }
+        else direction = Vector2.zero;
+        if (count == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+
+        }
     }
 }
 struct Chunk
