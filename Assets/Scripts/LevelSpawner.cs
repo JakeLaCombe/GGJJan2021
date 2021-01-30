@@ -18,7 +18,9 @@ public class LevelSpawner : MonoBehaviour
     public GameObject questGiverSpeechBubble;
     public GameObject homeBase;  // The spot to return your found item from your quest
     public MonoBehaviour gameManager;
-
+    public AudioSource backgroundMusic;
+    public AudioClip[] backgroundMusicPossibilities;
+    private int backgroundMusicPossibilityCurrentlyPlayingIndex = -1;  // -1 = not playing
 
     public int CountToSpawn;
     public List<GameObject> Spawners;
@@ -273,6 +275,12 @@ public class LevelSpawner : MonoBehaviour
         // Change the text of the quest
         var tm = questGiverSpeechBubble.GetComponentInChildren<TMPro.TextMeshProUGUI>();
         tm.text = $"Find my {itemScript.displayableName}!";
+
+        // Play some background music during this quest
+        this.backgroundMusicPossibilityCurrentlyPlayingIndex++; // Play next one in line
+        int clipToPlayIndex = this.backgroundMusicPossibilityCurrentlyPlayingIndex % this.backgroundMusicPossibilities.Length;
+        this.backgroundMusic.clip = this.backgroundMusicPossibilities[clipToPlayIndex];
+        this.backgroundMusic.Play();
     }
 
     private void AddQuestItem(int[,] tiles, System.Func<Vector2Int, Vector2> tileToPositionTranslator, GameObject questObjectPrefab)

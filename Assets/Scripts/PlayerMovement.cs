@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
             ConfusionTime -= Time.deltaTime;
         }
 
-
+        
 
         if (velocity < 0)
         {
@@ -109,6 +109,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // Quit the game if user presses Escape key
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
         if (Manager._heldQuestItem != null && Manager._heldQuestItem.Item == QuestItem.ItemType.FeatherBoa)
         {
             body.gravityScale = .5f;
