@@ -14,7 +14,8 @@ public class LevelSpawner : MonoBehaviour
     public int PlatformGenerateCount;
     public int PlacementTryMax = 10;
 
-    public GameObject questObject;
+    public GameObject[] questObjectPossibilities;
+    public GameObject questGiverSpeechBubble;
     public MonoBehaviour gameManager;
 
 
@@ -28,6 +29,10 @@ public class LevelSpawner : MonoBehaviour
 
         tilemap = GetComponent<Tilemap>();
         ChangeMap();
+
+        GameObject questObject = questObjectPossibilities[0];
+
+        GiveQuest(this.questGiverSpeechBubble, questObject);
     }
 
     // Update is called once per frame
@@ -187,6 +192,21 @@ public class LevelSpawner : MonoBehaviour
 
     }
 
+    private void GiveQuest(GameObject questGiverSpeechBubble, GameObject questObjectPrefab)
+    {
+        QuestItem itemScript = questObjectPrefab.GetComponent<QuestItem>();
+
+        // Display the object inside the speech bubble
+
+        GameObject spriteToDisplayInSpeechBubble = Object.Instantiate(questObjectPrefab);
+        spriteToDisplayInSpeechBubble.transform.parent = questGiverSpeechBubble.transform;
+        //spriteToDisplayInSpeechBubble.transform.localPosition = new Vector3(0, -0.5F, 0);
+
+        // Change the text of the quest
+        var tm = questGiverSpeechBubble.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+        tm.text = $"Find my {itemScript.displayableName}";
+    }
+
     private void AddQuestItem(int[,] tiles, System.Func<Vector2Int, Vector2> tileToPositionTranslator)
     {
         // Find a good spot to put it
@@ -244,7 +264,7 @@ public class LevelSpawner : MonoBehaviour
         Vector2 foundWorldPosition = tileToPositionTranslator(foundTilePosition);
 
         // Add it to the scene
-        GameObject quest = Object.Instantiate(this.questObject);
+        GameObject quest = Object.Instantiate(this.questObjectPossibilities[0]);
         quest.transform.position = new Vector3(foundWorldPosition.x, foundWorldPosition.y);
 
         CircleCollider2D collider = quest.AddComponent<CircleCollider2D>();
