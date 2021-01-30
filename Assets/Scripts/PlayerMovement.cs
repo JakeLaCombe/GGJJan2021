@@ -13,12 +13,13 @@ public class PlayerMovement : MonoBehaviour
     public AudioSource jumpSoundAudioSource;
     public AudioClip jumpSoundAudioClip;
     public float ConfusionTime;
+    public GameManager Manager;
     Rigidbody2D body;
     Animator animator;
     // Start is called before the first frame update
     void Start()
     {
-
+        Manager = FindObjectOfType<GameManager>();
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
@@ -96,10 +97,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-
+        if (Manager.QuestItem != null && Manager.QuestItem.Item == QuestItem.ItemType.FeatherBoa)
+        {
+            body.gravityScale = .5f;
+        }
+        else
+        {
+            body.gravityScale = 1.5f;
+        }
         Move();
         HandleCollisions();
-       
+
 
 
     }
