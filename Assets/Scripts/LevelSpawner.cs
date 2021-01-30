@@ -16,6 +16,7 @@ public class LevelSpawner : MonoBehaviour
 
     public GameObject[] questObjectPossibilities;
     public GameObject questGiverSpeechBubble;
+    public GameObject homeBase;  // The spot to return your found item from your quest
     public MonoBehaviour gameManager;
 
 
@@ -29,6 +30,7 @@ public class LevelSpawner : MonoBehaviour
 
         tilemap = GetComponent<Tilemap>();
         ChangeMap();
+        SetUpHomeBaseToReturnItem(homeBase, (GameManager)gameManager);
 
         GameObject questObject = questObjectPossibilities[0];
 
@@ -40,6 +42,32 @@ public class LevelSpawner : MonoBehaviour
     {
 
     }
+
+    private static void SetUpHomeBaseToReturnItem(GameObject homeBase, GameManager gameManager)
+    {
+        //BoxCollider2D collider = homeBase.GetComponent<BoxCollider2D>();
+
+        HomeBaseBehaviour behaviour = homeBase.AddComponent<HomeBaseBehaviour>();
+        behaviour.HomeBaseEntered += () =>
+        {
+            bool result = gameManager.TryReturnHeldQuestItem();
+            Debug.Log($"Successfully returned item:{result}");
+        };
+    }
+
+    private class HomeBaseBehaviour : MonoBehaviour
+    {
+        public event System.Action HomeBaseEntered;
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (this.HomeBaseEntered != null)
+            {
+                this.HomeBaseEntered();
+            }
+        }
+    }
+
     public void ChangeMap()
     {
         int[,] Tiles = new int[(int)GameSize.x + 1, (int)GameSize.y + 1];
@@ -275,7 +303,9 @@ public class LevelSpawner : MonoBehaviour
         QuestPickupBehaviour behaviour = quest.AddComponent<QuestPickupBehaviour>();
         behaviour.ItemPickedUp += () =>
         {
-            ((GameManager)this.gameManager).SetQuestItemPickedUp();
+            QuestItem questItemScript = quest.GetComponentInChildren<QuestItem>();
+
+            ((GameManager)this.gameManager).SetQuestItemPickedUp(questItemScript);
             Object.Destroy(quest);
         };
     }
