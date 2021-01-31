@@ -1,12 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     private const int NumberOfQuestItemsToReturnInOrderToWin = 2;
     private int _numberOfQuestItemsReturned = 0;
     public QuestItem _heldQuestItem;
+    public Text timeLeftText;
+    public Text CollectedText;
+
+    public GameObject FailurePanel;
+    private float TimeTillFailure = 120;
+
+    public Image spriteRenderer;
 
 
     public void SetQuestItemPickedUp(QuestItem item)
@@ -17,6 +25,8 @@ public class GameManager : MonoBehaviour
         }
 
         this._heldQuestItem = item;
+        spriteRenderer.enabled = true;
+        spriteRenderer.sprite = _heldQuestItem.GetComponent<SpriteRenderer>().sprite;
     }
 
     public bool TryReturnHeldQuestItem()
@@ -35,7 +45,15 @@ public class GameManager : MonoBehaviour
             UnityEngine.SceneManagement.SceneManager.LoadScene("Winner");
         }
 
+        spriteRenderer.enabled = false;
+
         return true;
+    }
+
+    public void ResetClock()
+    {
+        TimeTillFailure = 120;
+
     }
 
     public int NumberOfQuestItemsReturned
@@ -47,12 +65,19 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        spriteRenderer.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        TimeTillFailure -= Time.deltaTime;
+        if (TimeTillFailure < 0)
+        {
+            FailurePanel.SetActive(true);
+            Time.timeScale = 0;
+            TimeTillFailure = -1;
+        }
+        timeLeftText.text = ((int)TimeTillFailure).ToString();
     }
 }

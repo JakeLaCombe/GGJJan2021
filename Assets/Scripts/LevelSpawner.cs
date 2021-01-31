@@ -65,7 +65,10 @@ public class LevelSpawner : MonoBehaviour
 
             if (result)
             {
+                gameManager.ResetClock();
+
                 GameObject questObjectPrefab = this.questObjectPrefabsToAssignToPlayer.Dequeue();
+
                 ChangeMap(questObjectPrefab);
                 GiveQuest(this.questGiverSpeechBubble, questObjectPrefab);
             }
