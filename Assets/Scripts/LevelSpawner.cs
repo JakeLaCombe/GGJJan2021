@@ -284,7 +284,7 @@ public class LevelSpawner : MonoBehaviour
         bool SouthTile = false;
         bool WestTile = false;
         bool EastTile = false;
-        Debug.Log(x + " " + y);
+
         if (y - 1 < 0 || tiles[x, y - 1] == 0)
         {
             SouthTile = false;
@@ -296,7 +296,7 @@ public class LevelSpawner : MonoBehaviour
 
         if (x - 1 < 0 || tiles[x - 1, y] == 0)
         {
-            Debug.Log("Test");
+
             WestTile = false;
         }
         else
