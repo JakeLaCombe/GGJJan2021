@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    private const int NumberOfQuestItemsToReturnInOrderToWin = 2;
+    private int _numberOfQuestItemsReturned = 0;
     public QuestItem _heldQuestItem;
+
 
     public void SetQuestItemPickedUp(QuestItem item)
     {
@@ -24,8 +27,14 @@ public class GameManager : MonoBehaviour
         }
 
         this._heldQuestItem = null;  // It's been returned, so not holding it anymore
+        this._numberOfQuestItemsReturned++;
 
         return true;
+    }
+
+    public int NumberOfQuestItemsReturned
+    {
+        get { return this._numberOfQuestItemsReturned; }
     }
 
 
