@@ -72,6 +72,6 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0;
             TimeTillFailure = -1;
         }
-        timeLeftText.text = TimeTillFailure.ToString();
+        timeLeftText.text = ((int)TimeTillFailure).ToString();
     }
 }
