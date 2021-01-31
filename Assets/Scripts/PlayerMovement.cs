@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
             ConfusionTime -= Time.deltaTime;
         }
 
-        
+
 
         if (velocity < 0)
         {
@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (isjumping)
                 {
-                    body.AddForce(new Vector2(0, (jumpForce / 2) * -1), ForceMode2D.Impulse);
+                    body.AddForce(new Vector2(0, (jumpForce / 5) * -1), ForceMode2D.Impulse);
                 }
                 else
                 {
@@ -107,13 +107,19 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        // Quit the game if user presses Escape key
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
         }
+    }
+
+
+    private void FixedUpdate()
+    {
+        // Quit the game if user presses Escape key
+
 
         if (Manager._heldQuestItem != null && Manager._heldQuestItem.Item == QuestItem.ItemType.FeatherBoa)
         {
