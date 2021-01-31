@@ -419,7 +419,7 @@ public class LevelSpawner : MonoBehaviour
         int minimumTileHeightToPutQuestItem = 5;
 
         // But it gets harder/higher every time you return a quest item!
-        const int heightIncreaseEveryReturnedItem = 4;
+        const int heightIncreaseEveryReturnedItem = 6;
         minimumTileHeightToPutQuestItem += (manager.NumberOfQuestItemsReturned * heightIncreaseEveryReturnedItem);
 
         // Find a good spot to put it
