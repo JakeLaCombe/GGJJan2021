@@ -28,24 +28,7 @@ public class LevelSpawner : MonoBehaviour
     public List<GameObject> Spawners;
 
     List<GameObject> spawnedobjects = new List<GameObject>();
-    List<TileBase> WallTiles;
-
-    enum TileType
-    {
-        NWCorner,
-        NWall,
-        NEcorner,
-        EWall,
-        SECorner,
-        SCorner,
-        SWcorner,
-        Wcorner,
-        NoWalls,
-        AllWalls
-    }
-
-
-
+    public List<TileBase> WallTiles;
 
 
     // Start is called before the first frame update
@@ -301,6 +284,7 @@ public class LevelSpawner : MonoBehaviour
         bool SouthTile = false;
         bool WestTile = false;
         bool EastTile = false;
+        Debug.Log(x + " " + y);
         if (y - 1 < 0 || tiles[x, y - 1] == 0)
         {
             SouthTile = false;
@@ -312,6 +296,7 @@ public class LevelSpawner : MonoBehaviour
 
         if (x - 1 < 0 || tiles[x - 1, y] == 0)
         {
+            Debug.Log("Test");
             WestTile = false;
         }
         else

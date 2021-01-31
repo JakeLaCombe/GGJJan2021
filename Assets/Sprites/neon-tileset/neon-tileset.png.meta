@@ -5,6 +5,36 @@ TextureImporter:
   - first:
       213: 3000088419295153904
     second: neon-tileset0
+  - first:
+      213: -2284467438594765137
+    second: neon-tileset_0
+  - first:
+      213: 8145003269573039039
+    second: neon-tileset_1
+  - first:
+      213: -6942342028275010781
+    second: neon-tileset_2
+  - first:
+      213: -5837799039281040603
+    second: neon-tileset_3
+  - first:
+      213: -8291120326864974451
+    second: neon-tileset_4
+  - first:
+      213: 6837756631213156950
+    second: neon-tileset_5
+  - first:
+      213: -2800040949073650362
+    second: neon-tileset_6
+  - first:
+      213: 3019399067791596606
+    second: neon-tileset_8
+  - first:
+      213: 2824491751597217612
+    second: neon-tileset_9
+  - first:
+      213: -3102890130721476080
+    second: neon-tileset_10
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -49,7 +79,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -78,26 +108,227 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: neon-tileset0
+      name: neon-tileset_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 65
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: faecc9dd7f0fb40e0800000000000000
+      internalID: -2284467438594765137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neon-tileset_1
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 65
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb3db41d15dd80170800000000000000
+      internalID: 8145003269573039039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neon-tileset_2
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 65
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 323376715b8d7af90800000000000000
+      internalID: -6942342028275010781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neon-tileset_3
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 65
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 523798924b8fbfea0800000000000000
+      internalID: -5837799039281040603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neon-tileset_4
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 33
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8d413fadf500fc80800000000000000
+      internalID: -8291120326864974451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neon-tileset_5
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 33
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65a28089d6794ee50800000000000000
+      internalID: 6837756631213156950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neon-tileset_6
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 33
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64ddae197914429d0800000000000000
+      internalID: -2800040949073650362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neon-tileset_8
       rect:
         serializedVersion: 2
         x: 1
         y: 1
-        width: 128
-        height: 96
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 0fec9dea58472a920800000000000000
-      internalID: 3000088419295153904
+      spriteID: e3c1dd6647f07e920800000000000000
+      internalID: 3019399067791596606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neon-tileset_9
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 1
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4719f4884c923720800000000000000
+      internalID: 2824491751597217612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: neon-tileset_10
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 1
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 012f74dadd150f4d0800000000000000
+      internalID: -3102890130721476080
       vertices: []
       indices: 
       edges: []
