@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    private const int NumberOfQuestItemsToReturnInOrderToWin = 2;
+    private const int NumberOfQuestItemsToReturnInOrderToWin = 7; // currently 7 objects in the game
     private int _numberOfQuestItemsReturned = 0;
     public QuestItem _heldQuestItem;
     public Text timeLeftText;
