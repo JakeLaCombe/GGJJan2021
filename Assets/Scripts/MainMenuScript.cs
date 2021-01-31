@@ -22,4 +22,14 @@ public class MainMenuScript : MonoBehaviour
         Debug.Log("mgn start game");
         SceneManager.LoadScene("SampleScene");
     }
+
+    public void OnReturnToMainMenuButtonClicked()
+    {
+        SceneManager.LoadScene("Main Menu");
+    }
+
+    public void OnInstructionsButtonClicked()
+    {
+        SceneManager.LoadScene("Instructions");
+    }
 }
