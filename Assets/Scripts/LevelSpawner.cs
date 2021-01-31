@@ -65,7 +65,7 @@ public class LevelSpawner : MonoBehaviour
 
             if (result)
             {
-                gameManager.ResetClock();
+
 
                 GameObject questObjectPrefab = this.questObjectPrefabsToAssignToPlayer.Dequeue();
 
@@ -382,10 +382,7 @@ public class LevelSpawner : MonoBehaviour
         {
             Debug.Log("OnTriggerEnter2D MGN");
 
-            if (this.ItemPickedUp != null)
-            {
-                this.ItemPickedUp();
-            }
+            this.ItemPickedUp?.Invoke();
         }
     }
 

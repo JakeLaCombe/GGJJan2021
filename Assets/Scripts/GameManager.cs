@@ -12,19 +12,14 @@ public class GameManager : MonoBehaviour
     public Text CollectedText;
 
     public GameObject FailurePanel;
-    private float TimeTillFailure = 120;
-
+    private float TimeTillFailure = 30;
+    private int timeToComplete = 30;
     public Image spriteRenderer;
 
 
     public void SetQuestItemPickedUp(QuestItem item)
     {
-        if (item == null)
-        {
-            throw new System.ArgumentNullException(nameof(item));
-        }
-
-        this._heldQuestItem = item;
+        this._heldQuestItem = item ?? throw new System.ArgumentNullException(nameof(item));
         spriteRenderer.enabled = true;
         spriteRenderer.sprite = _heldQuestItem.GetComponent<SpriteRenderer>().sprite;
     }
@@ -36,11 +31,12 @@ public class GameManager : MonoBehaviour
             return false; // Not holding anything
         }
 
-        this._heldQuestItem = null;  // It's been returned, so not holding it anymore
-        this._numberOfQuestItemsReturned++;
-
+        _heldQuestItem = null;  // It's been returned, so not holding it anymore
+        _numberOfQuestItemsReturned++;
+        timeToComplete += 15;
+        TimeTillFailure += timeToComplete;
         // Hack, side effect of "winning", but it's a Game Jam so who cares
-        if (this._numberOfQuestItemsReturned >= GameManager.NumberOfQuestItemsToReturnInOrderToWin)
+        if (_numberOfQuestItemsReturned >= NumberOfQuestItemsToReturnInOrderToWin)
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene("Winner");
         }
@@ -50,11 +46,7 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-    public void ResetClock()
-    {
-        TimeTillFailure = 120;
-
-    }
+   
 
     public int NumberOfQuestItemsReturned
     {
