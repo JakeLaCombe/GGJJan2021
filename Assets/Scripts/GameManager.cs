@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
 
         _heldQuestItem = null;  // It's been returned, so not holding it anymore
         _numberOfQuestItemsReturned++;
+        CollectedText.text = _numberOfQuestItemsReturned.ToString();
         timeToComplete += 15;
         TimeTillFailure += timeToComplete;
         // Hack, side effect of "winning", but it's a Game Jam so who cares
@@ -46,7 +47,7 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-   
+
 
     public int NumberOfQuestItemsReturned
     {
