@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -15,6 +16,7 @@ public class LevelSpawner : MonoBehaviour
     public int PlacementTryMax = 10;
 
     public GameObject[] questObjectPossibilities;
+    private Queue<GameObject> questObjectPrefabsToAssignToPlayer;
     public GameObject questGiverSpeechBubble;
     public GameObject homeBase;  // The spot to return your found item from your quest
     public MonoBehaviour gameManager;
@@ -30,11 +32,11 @@ public class LevelSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        this.questObjectPrefabsToAssignToPlayer = CreateQuestObjectPrefabQueue(this.questObjectPossibilities);
 
         tilemap = GetComponent<Tilemap>();
 
-        GameObject questObjectPrefab = questObjectPossibilities[Random.Range(0, questObjectPossibilities.Length)];
+        GameObject questObjectPrefab = this.questObjectPrefabsToAssignToPlayer.Dequeue();
 
         ChangeMap(questObjectPrefab);
         SetUpHomeBaseToReturnItem(homeBase, (GameManager)gameManager);
@@ -45,6 +47,11 @@ public class LevelSpawner : MonoBehaviour
     void Update()
     {
 
+    }
+
+    private static Queue<GameObject> CreateQuestObjectPrefabQueue(GameObject[] questObjectPossibilities)
+    {
+        return new Queue<GameObject>(questObjectPossibilities.OrderBy(x => UnityEngine.Random.value));
     }
 
     private void SetUpHomeBaseToReturnItem(GameObject homeBase, GameManager gameManager)
@@ -58,7 +65,7 @@ public class LevelSpawner : MonoBehaviour
 
             if (result)
             {
-                GameObject questObjectPrefab = questObjectPossibilities[Random.Range(0, questObjectPossibilities.Length)];
+                GameObject questObjectPrefab = this.questObjectPrefabsToAssignToPlayer.Dequeue();
                 ChangeMap(questObjectPrefab);
                 GiveQuest(this.questGiverSpeechBubble, questObjectPrefab);
             }
