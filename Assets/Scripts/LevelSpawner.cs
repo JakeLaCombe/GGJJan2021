@@ -28,6 +28,25 @@ public class LevelSpawner : MonoBehaviour
     public List<GameObject> Spawners;
 
     List<GameObject> spawnedobjects = new List<GameObject>();
+    List<TileBase> WallTiles;
+
+    enum TileType
+    {
+        NWCorner,
+        NWall,
+        NEcorner,
+        EWall,
+        SECorner,
+        SCorner,
+        SWcorner,
+        Wcorner,
+        NoWalls,
+        AllWalls
+    }
+
+
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -243,6 +262,9 @@ public class LevelSpawner : MonoBehaviour
         }
 
 
+        //SpawnTiles
+
+
 
         for (int x = 0; x < GameSize.x; x++)
         {
@@ -250,7 +272,11 @@ public class LevelSpawner : MonoBehaviour
             {
                 if (Tiles[x, y] == 1)
                 {
-                    tilemap.SetTile(new Vector3Int(x - 1, y - 1, 0), Tile);
+
+
+
+                    tilemap.SetTile(new Vector3Int(x - 1, y - 1, 0), SpriteFinder(Tiles, x, y));
+
                 }
                 else if (Tiles[x, y] == 2)
                 {
@@ -263,6 +289,113 @@ public class LevelSpawner : MonoBehaviour
 
             }
         }
+
+
+    }
+
+
+
+    private TileBase SpriteFinder(int[,] tiles, int x, int y)
+    {
+        bool northTile = false;
+        bool SouthTile = false;
+        bool WestTile = false;
+        bool EastTile = false;
+        if (y - 1 < 0 || tiles[x, y - 1] == 0)
+        {
+            SouthTile = false;
+        }
+        else
+        {
+            SouthTile = true;
+        }
+
+        if (x - 1 < 0 || tiles[x - 1, y] == 0)
+        {
+            WestTile = false;
+        }
+        else
+        {
+            WestTile = true;
+        }
+        if (tiles[x, y + 1] == 1)
+        {
+            northTile = true;
+        }
+        if (tiles[x + 1, y] == 1)
+        {
+            EastTile = true;
+        }
+        /*
+       NWCorner 0
+       NWall 1
+       NEcorner 2 
+       EWall 3
+       SECorner 4
+       SWall 5
+       SWcorner 6
+       WWall 7
+       NoWalls 8
+       AllWalls 9
+    */
+        //all four tiles
+        if (northTile && WestTile && EastTile && SouthTile)
+        {
+            return WallTiles[8];
+        }
+        else if (WestTile && EastTile && SouthTile)
+        {
+            //no north
+            return WallTiles[1];
+        }
+        else if (northTile && EastTile && SouthTile)
+        {
+            //no west
+            return WallTiles[7];
+        }
+        else if (northTile && WestTile && SouthTile)
+        {
+            //no east
+            return WallTiles[3];
+        }
+        else if (northTile && WestTile && EastTile)
+        {
+            //no south
+            return WallTiles[5];
+        }
+        else if (northTile && WestTile)
+        {
+            //no south, no east
+            return WallTiles[4];
+        }
+        else if (northTile && EastTile)
+        {
+            //no south, no west
+            return WallTiles[6];
+        }
+        else if (WestTile && SouthTile)
+        {
+            //no North, No East
+            return WallTiles[2];
+        }
+        else if (EastTile && SouthTile)
+        {
+            //no North, No West
+            return WallTiles[0];
+        }
+        else
+        {
+            return WallTiles[9];
+        }
+
+
+
+
+
+
+
+
+
 
 
     }
@@ -327,12 +460,12 @@ public class LevelSpawner : MonoBehaviour
             // ###
 
             return
-            isTileFilled(candidateMiddleFloor + Vector2Int.left) &&
-            isTileFilled(candidateMiddleFloor) &&
-            isTileFilled(candidateMiddleFloor + Vector2Int.right) &&
-            !(isTileFilled(candidateMiddleFloor + Vector2Int.left + Vector2Int.up)) &&
-            !(isTileFilled(candidateMiddleFloor + Vector2Int.up)) &&
-            !(isTileFilled(candidateMiddleFloor + Vector2Int.right + Vector2Int.up));
+        isTileFilled(candidateMiddleFloor + Vector2Int.left) &&
+        isTileFilled(candidateMiddleFloor) &&
+        isTileFilled(candidateMiddleFloor + Vector2Int.right) &&
+        !(isTileFilled(candidateMiddleFloor + Vector2Int.left + Vector2Int.up)) &&
+        !(isTileFilled(candidateMiddleFloor + Vector2Int.up)) &&
+        !(isTileFilled(candidateMiddleFloor + Vector2Int.right + Vector2Int.up));
         };
 
         System.Func<Vector2Int> positionPicker = () =>
