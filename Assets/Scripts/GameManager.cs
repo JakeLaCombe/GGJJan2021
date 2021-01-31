@@ -29,6 +29,12 @@ public class GameManager : MonoBehaviour
         this._heldQuestItem = null;  // It's been returned, so not holding it anymore
         this._numberOfQuestItemsReturned++;
 
+        // Hack, side effect of "winning", but it's a Game Jam so who cares
+        if (this._numberOfQuestItemsReturned >= GameManager.NumberOfQuestItemsToReturnInOrderToWin)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Winner");
+        }
+
         return true;
     }
 
