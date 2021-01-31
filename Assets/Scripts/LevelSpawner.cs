@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -15,6 +16,7 @@ public class LevelSpawner : MonoBehaviour
     public int PlacementTryMax = 10;
 
     public GameObject[] questObjectPossibilities;
+    private Queue<GameObject> questObjectPrefabsToAssignToPlayer;
     public GameObject questGiverSpeechBubble;
     public GameObject homeBase;  // The spot to return your found item from your quest
     public MonoBehaviour gameManager;
@@ -30,11 +32,11 @@ public class LevelSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        this.questObjectPrefabsToAssignToPlayer = CreateQuestObjectPrefabQueue(this.questObjectPossibilities);
 
         tilemap = GetComponent<Tilemap>();
 
-        GameObject questObjectPrefab = questObjectPossibilities[Random.Range(0, questObjectPossibilities.Length)];
+        GameObject questObjectPrefab = this.questObjectPrefabsToAssignToPlayer.Dequeue();
 
         ChangeMap(questObjectPrefab);
         SetUpHomeBaseToReturnItem(homeBase, (GameManager)gameManager);
@@ -45,6 +47,11 @@ public class LevelSpawner : MonoBehaviour
     void Update()
     {
 
+    }
+
+    private static Queue<GameObject> CreateQuestObjectPrefabQueue(GameObject[] questObjectPossibilities)
+    {
+        return new Queue<GameObject>(questObjectPossibilities.OrderBy(x => UnityEngine.Random.value));
     }
 
     private void SetUpHomeBaseToReturnItem(GameObject homeBase, GameManager gameManager)
@@ -59,7 +66,9 @@ public class LevelSpawner : MonoBehaviour
             if (result)
             {
                 gameManager.ResetClock();
-                GameObject questObjectPrefab = questObjectPossibilities[Random.Range(0, questObjectPossibilities.Length)];
+
+                GameObject questObjectPrefab = this.questObjectPrefabsToAssignToPlayer.Dequeue();
+
                 ChangeMap(questObjectPrefab);
                 GiveQuest(this.questGiverSpeechBubble, questObjectPrefab);
             }
@@ -192,7 +201,9 @@ public class LevelSpawner : MonoBehaviour
         {
             // Offsets that Bryce told me to use
             return new Vector2(vec.x + 1F, vec.y + 1.5F);
-        }, questObjectPrefab);
+        }, questObjectPrefab, (GameManager)this.gameManager);
+
+
         int lefttoSpawn = CountToSpawn;
         while (lefttoSpawn > 0)
         {
@@ -284,8 +295,15 @@ public class LevelSpawner : MonoBehaviour
         this.backgroundMusic.Play();
     }
 
-    private void AddQuestItem(int[,] tiles, System.Func<Vector2Int, Vector2> tileToPositionTranslator, GameObject questObjectPrefab)
+    private static void AddQuestItem(int[,] tiles, System.Func<Vector2Int, Vector2> tileToPositionTranslator, GameObject questObjectPrefab, GameManager manager)
     {
+        // Look at minimum 5 tiles above the ground, so start there
+        int minimumTileHeightToPutQuestItem = 5;
+
+        // But it gets harder/higher every time you return a quest item!
+        const int heightIncreaseEveryReturnedItem = 4;
+        minimumTileHeightToPutQuestItem += (manager.NumberOfQuestItemsReturned * heightIncreaseEveryReturnedItem);
+
         // Find a good spot to put it
 
         System.Func<Vector2Int, bool> isTileFilled = (spot) =>
@@ -319,10 +337,7 @@ public class LevelSpawner : MonoBehaviour
 
         System.Func<Vector2Int> positionPicker = () =>
         {
-            // Look at minimum 5 tiles above the ground, so start there
-            int minimumTilesAboveGround = 5;
-
-            for (int y = minimumTilesAboveGround; y < tiles.GetLength(1); ++y)
+            for (int y = minimumTileHeightToPutQuestItem; y < tiles.GetLength(1); ++y)
             {
                 for (int x = 1; x < tiles.GetLength(0); ++x)
                 {
@@ -354,7 +369,7 @@ public class LevelSpawner : MonoBehaviour
         {
             QuestItem questItemScript = quest.GetComponentInChildren<QuestItem>();
 
-            ((GameManager)this.gameManager).SetQuestItemPickedUp(questItemScript);
+            manager.SetQuestItemPickedUp(questItemScript);
             quest.SetActive(false);  // Make it disappear but do not "destroy" it so we can refer to it later (because it's being "held" by the player)
         };
     }

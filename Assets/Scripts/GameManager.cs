@@ -5,14 +5,17 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    private const int NumberOfQuestItemsToReturnInOrderToWin = 2;
+    private int _numberOfQuestItemsReturned = 0;
     public QuestItem _heldQuestItem;
     public Text timeLeftText;
     public Text CollectedText;
-    private int Collected;
+
     public GameObject FailurePanel;
     private float TimeTillFailure = 120;
 
     public Image spriteRenderer;
+
 
     public void SetQuestItemPickedUp(QuestItem item)
     {
@@ -34,6 +37,9 @@ public class GameManager : MonoBehaviour
         }
 
         this._heldQuestItem = null;  // It's been returned, so not holding it anymore
+        this._numberOfQuestItemsReturned++;
+
+
         spriteRenderer.enabled = false;
         return true;
     }
@@ -41,9 +47,14 @@ public class GameManager : MonoBehaviour
     public void ResetClock()
     {
         TimeTillFailure = 120;
-        Collected++;
-        CollectedText.text = Collected.ToString();
+
     }
+
+    public int NumberOfQuestItemsReturned
+    {
+        get { return this._numberOfQuestItemsReturned; }
+    }
+
 
     // Start is called before the first frame update
     void Start()
